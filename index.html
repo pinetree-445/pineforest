@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>推广部：从入门到入土</title>
+    <style>
+        :root {
+            --bg-1: #f5f7ff;
+            --bg-2: #eef7ff;
+            --primary: #3b82f6;
+            --primary-dark: #1d4ed8;
+            --accent: #8b5cf6;
+            --text: #1f2937;
+            --muted: #6b7280;
+            --card: rgba(255, 255, 255, 0.8);
+            --line: rgba(148, 163, 184, 0.28);
+            --shadow: 0 20px 50px rgba(99, 102, 241, 0.12);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+            background: linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%);
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        .page {
+            width: min(1200px, calc(100% - 32px));
+            margin: 32px auto 60px;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, rgba(59,130,246,0.12), rgba(139,92,246,0.10));
+            border: 1px solid var(--line);
+            border-radius: 28px;
+            padding: 32px 28px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(8px);
+        }
+
+        h1 {
+            margin: 0 0 20px;
+            font-size: clamp(2rem, 5vw, 4rem);
+            line-height: 1.15;
+            letter-spacing: 0.03em;
+            color: #0f172a;
+            font-weight: 800;
+        }
+
+        .hero-title {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.7);
+            box-shadow: inset 0 0 0 1px rgba(59,130,246,0.12);
+        }
+
+        .hero-img {
+            display: block;
+            width: min(100%, 980px);
+            margin: 18px auto 0;
+            border-radius: 24px;
+            box-shadow: 0 18px 40px rgba(30, 41, 59, 0.12);
+            border: 4px solid rgba(255,255,255,0.7);
+        }
+
+        .section-card {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 22px;
+            padding: 28px 24px 18px;
+            box-shadow: var(--shadow);
+            margin-top: 28px;
+        }
+
+        .section-card > h2 {
+            margin: 0 0 16px;
+            font-size: clamp(1.6rem, 3vw, 2.3rem);
+            font-weight: 800;
+            color: var(--primary-dark);
+        }
+
+        .section-card p,
+        .section-card li,
+        .section-card a,
+        .section-card h3,
+        .section-card h4,
+        .section-card h5 {
+            font-size: 1.02rem;
+        }
+
+        .parent-title {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 18px;
+            margin: 14px 0 10px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, rgba(96,165,250,0.12), rgba(168,85,247,0.06));
+            border: 1px solid rgba(96,165,250,0.18);
+            cursor: pointer;
+            font-weight: 700;
+            user-select: none;
+            transition: all 0.25s ease;
+            color: #111827;
+            box-shadow: 0 10px 24px rgba(59, 130, 246, 0.06);
+        }
+
+        .parent-title:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 12px 28px rgba(59, 130, 246, 0.12);
+            border-color: rgba(59,130,246,0.24);
+        }
+
+        .parent-title::after {
+            content: "+";
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(59,130,246,0.12);
+            color: var(--primary-dark);
+            font-size: 1.3rem;
+            font-weight: 700;
+            transition: transform 0.2s ease;
+        }
+
+        .parent-title[aria-expanded="true"]::after {
+            content: "−";
+            transform: rotate(180deg);
+        }
+
+        .sub-list {
+            display: none;
+            padding: 18px 18px 8px 18px;
+            margin: 0 0 10px;
+            list-style: none;
+            background: rgba(255,255,255,0.6);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+        }
+
+        .sub-list.show {
+            display: block;
+        }
+
+        .sub-list ul,
+        .sub-list ol {
+            margin-top: 8px;
+            padding-left: 1.2rem;
+        }
+
+        .sub-list li {
+            margin: 8px 0;
+        }
+
+        .sub-list h2,
+        .sub-list h3,
+        .sub-list h4,
+        .sub-list h5 {
+            margin: 0.5rem 0;
+            font-weight: 700;
+            color: #1f2937;
+        }
+
+        .sub-list p {
+            margin: 0.35rem 0;
+            color: var(--muted);
+        }
+
+        a {
+            color: var(--primary-dark);
+            text-decoration: none;
+            transition: opacity 0.2s ease;
+        }
+
+        a:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, rgba(59,130,246,0.12), rgba(139,92,246,0.18));
+            color: var(--primary-dark);
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        @media (max-width: 700px) {
+            .page { width: min(100% - 18px, 1200px); }
+            .hero, .section-card { padding-left: 16px; padding-right: 16px; }
+            .parent-title { padding: 14px 16px; }
+            .sub-list { padding-left: 12px; padding-right: 12px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <header class="hero">
+            <h1><span class="hero-title">推广部：从入门到入土</span></h1>
+            <img class="hero-img" src="微信图片_20261010224107_48_2 - 副本.jpg" alt="推广部培训海报">
+        </header>
+
+        <section class="section-card" id="前言">
+            <div class="tag">前言</div>
+            <p>本文档旨在帮助新入职人员快速了解相关工作内容。当前维护负责人暂定为pinetree-445和全体群友。<br>
+            如遇流程相关问题，请参阅第2部分；<br>
+            如需提升专业技能，请参阅第3部分；<br>
+            若上述途径仍无法解决，请参阅第4部分或在群中咨询。</p>
+        </section>
+
+        <section class="section-card" id="正文">
+            <h2>正文</h2>
+
+            <h1 class="parent-title" aria-expanded="true">1.WHO R WE</h1>
+            <p class="sub-list show">推广部系先锋网络中心（以下简称"XF"）下设的职能部门，主要负责XF内部与外部的协调联动工作。<br>
+                该部门与办公室、美工部、网络部、硬件部共同隶属于校团委XF部门，受主席团统一管理，各部门之间互为平级。<br>
+                推广部的核心职责包括：活动策划与统筹、相关需求的沟通对接，以及承担XF的对外宣传与推广工作。</p>
+
+            <h1 class="parent-title" aria-expanded="false">2.工作方向</h1>
+            <ul class="sub-list">
+                <li>
+                    <h2 class="parent-title" aria-expanded="false">1.工作流程</h2>
+                    <ul class="sub-list">
+                        <li><h3>e.g.1:主席团下发指令 → 策划 → 对接美工/网络/硬件/办公室 → 产出物料 → 推广</h3></li>
+                        <li><h3>e.g.2:其他部门开展对外活动→留档→投入留档池作为向上汇报的素材</h3></li>
+                    </ul>
+                </li>
+                <li>
+                    <h2 class="parent-title" aria-expanded="false">2.工作内容</h2>
+                    <ol class="sub-list">
+                        <li><h3>各部门之间的对接</h3></li>
+                        <li><h3>内外之间的对接</h3></li>
+                        <li><h3>在部门缺人时临时充当其他部门临时成员</h3></li>
+                        <li><h3>xf内部活动策划（如xf之夜）和对外活动策划</h3></li>
+                        <li><h3>为活动进行留档</h3></li>
+                        <li><a href="#">留档池</a></li>
+                    </ol>
+                </li>
+                <li>
+                    <h2 class="parent-title" aria-expanded="false">3.对接对象及对接办法</h2>
+                    <ul class="sub-list">
+                        <li>
+                            <h3 class="parent-title" aria-expanded="false">1'组织外对象</h3>
+                            <ul class="sub-list">
+                                <li><h4>（1）校方人员（如团委）</h4></li>
+                                <p>掌握将活动内容撰写为稿件的能力，结合活动成果制作展示汇报材料，并根据需要产出网页、书面报告及影音成果。</p>
+                                <li><h4>（2）校友</h4></li>
+                                <p>借助网络流行文化元素做好校友对接工作，有效提升知名度与影响力。</p>
+                            </ul>
+                        </li>
+                        <li>
+                            <h3 class="parent-title" aria-expanded="false">2'组织内对象</h3>
+                            <ul class="sub-list">
+                                <li><h4>（1）宣传部内部部友</h4></li>
+                                <p>深入了解并有效承接既有策划项目，持续拓展创新活动形式。</p>
+                                <li><h4>（2）硬件部</h4></li>
+                                <p>在义务维修工作期间，安排人员轮值协作并进行记录，及时提供必要协助。</p>
+                                <li><h4>（3）网络部</h4></li>
+                                <p>协助网络部成员与其他部门建立有效对接，推动后端开发成果在各部门落地应用。</p>
+                                <li><h4>（4）办公室</h4></li>
+                                <p>加强沟通协调，及时掌握可调配资源情况。</p>
+                                <li><h4>（5）美工部</h4></li>
+                                <p>及时向美工部传达本次活动的内容需求，根据对方反馈灵活调整相关要求，必要时亲自参与制作环节。</p>
+                                <li><h4>（6）主席团（如果可能）</h4></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h1 class="parent-title" aria-expanded="false">3.工作技能</h1>
+            <ul class="sub-list">
+                <li>
+                    <h2 class="parent-title" aria-expanded="false">1.内容的产出</h2>
+                    <ul class="sub-list">
+                        <li><h3>1'网页的搭建</h3></li>
+                        <p>学习前端HTML网页制作、CSS页面美化及JavaScript基础知识。</p>
+                        <a href="https://b23.tv/w4lgoXS">网课</a>
+                        <li>
+                            <h3 class="parent-title" aria-expanded="false">2'摄影与录像</h3>
+                            <ul class="sub-list">
+                                <li><h4>手机，相机</h4></li>
+                                <a href="https://b23.tv/jL0uwHU">网课</a>
+                                <li><h4>其他摄像设备</h4></li>
+                                <a href="https://b23.tv/RDzzAiG">网课</a>
+                            </ul>
+                        </li>
+                        <li>
+                            <h3 class="parent-title" aria-expanded="false">3'文本内容的产出</h3>
+                            <ul class="sub-list">
+                                <li><h4>推广文案</h4></li>
+                                <a href="https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MjM5NTMyNDI1NA==&action=getalbum&album_id=1841333328931536897#wechat_redirect">网课</a>
+                                <li><h4>宣传稿</h4></li>
+                                <a href="https://www.91renrenshi.com/market_course/16428/70275.html">网课</a>
+                            </ul>
+                        </li>
+                        <li>
+                            <h3 class="parent-title" aria-expanded="false">4'电子图像内容的产出</h3>
+                            <ul class="sub-list">
+                                <li><h4>基本掌握adobe Photoshop</h4></li>
+                                <a href="https://study.163.com/course/introduction/274006.htm">网课</a>
+                                <li><h4>会基本纸绘技巧</h4></li>
+                                <a href="https://www.qingwk.com/topics">网课</a>
+                                <li><h4>能够使用ai生成所需图文(会写基础的prompt)</h4></li>
+                                <a href="https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers/">网课</a>
+                                <li><h4>有影音处理能力</h4></li>
+                                <a href="https://study.163.com/course/courseMain.htm?courseId=1004912009">网课</a>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <h2 class="parent-title" aria-expanded="false">2.产出内容后的推广技巧</h2>
+                    <ul class="sub-list">
+                        <li>
+                            <h3 class="parent-title" aria-expanded="false">1基本功</h3>
+                            <ul class="sub-list">
+                                <li>
+                                    <h4 class="parent-title" aria-expanded="false">1' 播音基本功(说话好听-物理)</h4>
+                                    <ul class="sub-list">
+                                        <li><h5>提打挺松</h5></li>
+                                        <a href="https://b23.tv/VKsPvr7">网课</a>
+                                        <li><h5>去口水音</h5></li>
+                                        <a href="https://b23.tv/8ndYiTD">网课</a>
+                                        <li><h5>内三外四</h5></li>
+                                        <a href="https://b23.tv/rLNLS3R">网课</a>
+                                    </ul>
+                                </li>
+                                <li><h4>2' 写作基本功</h4></li>
+                                <a href="https://www.bilibili.com/video/BV1BK41157c4">网课</a>
+                                <li><h4>3' 摄影基本功</h4></li>
+                                <a href="https://b23.tv/KkoBEmU">网课</a>
+                            </ul>
+                        </li>
+                        <li>
+                            <h3 class="parent-title" aria-expanded="false">2时事热点结合能力</h3>
+                            <ul class="sub-list">
+                                <li><h4>1'学会书面官方用语</h4></li>
+                                <a href="https://www.icourse163.org/learn/HLJU-1002839012">网课</a>
+                                <li>
+                                    <h4 class="parent-title" aria-expanded="false">2'热点搜集</h4>
+                                    <ul class="sub-list">
+                                        <li><h5>（1）要有梗</h5></li>
+                                        <p>借助哔哩哔哩、抖音等社交媒体平台，深入了解校友的所思所想。</p>
+                                        <li><h5>（2）要懂方向</h5></li>
+                                        <p>了解学校最新动态，把握对外宣传机遇。</p>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h3 class="parent-title" aria-expanded="false">3仪容仪表</h3>
+                            <ul class="sub-list">
+                                <li><h4>1'服饰</h4></li>
+                                <a href="http://bjcuc.com/All/cmpxzl/bo%20yin%20jiao%20xue%20zi%20liao/bo%20yin%20kao%20shi%20fu%20zhuang.html">网课</a>
+                                <li><h4>2'演播姿态</h4></li>
+                                <a href="https://www.bilibili.com/opus/638763788497059846">网课</a>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h1 class="parent-title" aria-expanded="false">4.FAQ</h1>
+            <p class="sub-list">
+                广泛收集各兄弟部门意见反馈，定期以文本形式汇总更新。<br>
+                如有组织外人员咨询，欢迎引导加入本年度招新群<a href="#">这里填群号</a>及电脑问题咨询群<a href="https://qun.qq.com/universal-share/share?ac=1&authKey=CMifj7s4AqGm3eJ1ejDDk1CNEhMRbItvHvG%2F0aKdi977Y6RoMtt6%2B29U6YpOdQ%2Bd&busi_data=eyJncm91cENvZGUiOiIxMDQwMTY2NDQ4IiwidG9rZW4iOiJtNnhTNHhZWWFVTnJqVVgraDJnc05RVFZGcSs0T2dlNVRDY3hJektaeE0xaVpqZUxHNEdzVlZ4SEdpQTlhL2pPIiwidWluIjoiMjY4NzYyOTU3MyJ9&data=s6rrnKxvf8hECh5VH4wVM0wlpptqlqJP5OzadQYV6Lp9b6kV6Q3EnhuMfBuj8EdhNAYrPMBiUfWtx0WDQW7bfQ&svctype=4&tempid=h5_group_info">1040166448</a>。
+            </p>
+        </section>
+    </div>
+
+    <script>
+        const titles = document.querySelectorAll('.parent-title');
+        titles.forEach(title => {
+            title.addEventListener('click', function() {
+                const subList = this.nextElementSibling;
+                const isAccordionItem = subList && subList.classList.contains('sub-list');
+
+                if (!isAccordionItem) return;
+
+                const shouldOpen = !subList.classList.contains('show');
+                subList.classList.toggle('show', shouldOpen);
+                this.setAttribute('aria-expanded', String(shouldOpen));
+            });
+        });
+    </script>
+</body>
+</html>
